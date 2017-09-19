@@ -1,0 +1,31 @@
+{
+
+    "name": "dot/categories",
+
+    "description": "The categories module of dot/cms",
+
+    "keywords": ["dotcms", "framework", "laravel", "cms", "modules", "plugins"],
+
+    "license": "MIT",
+
+    "type": "package",
+
+    "require": {
+        "dot/platform": "*",
+        "dot/auth": "*",
+        "dot/media": "*",
+        "dot/users": "*"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Dot\\Categories\\": "src"
+        }
+    },
+
+    "config": {
+        "preferred-install": "dist"
+    },
+
+    "minimum-stability" : "dev"
+}
