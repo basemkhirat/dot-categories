@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 /**
  * Class CategoriesApiController
  */
-class CategoriesApiController extends Dot\ApiController
+class CategoriesApiController extends ApiController
 {
 
     /**
