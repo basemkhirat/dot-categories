@@ -2,15 +2,16 @@
 
 namespace Dot\Categories\Controllers;
 
-use Request;
-use View;
 use Action;
-use Redirect;
 use Dot\Auth\Models\Auth;
 use Dot\Categories\Models\Category;
-use Dot\Controller;
+use Dot\Platform\Controller;
+use Redirect;
+use Request;
+use View;
 
-class CategoriesController extends Controller {
+class CategoriesController extends Controller
+{
 
     protected $data = [];
 
@@ -20,7 +21,8 @@ class CategoriesController extends Controller {
         $this->middleware("permission:categories.manage");
     }
 
-    function index($parent = 0) {
+    function index($parent = 0)
+    {
 
         if (Request::isMethod("post")) {
             if (Request::has("action")) {
@@ -45,7 +47,8 @@ class CategoriesController extends Controller {
         return View::make("categories::show", $this->data);
     }
 
-    public function create() {
+    public function create()
+    {
 
         if (Request::isMethod("post")) {
 
@@ -72,14 +75,15 @@ class CategoriesController extends Controller {
             Action::fire("category.saved", $category);
 
             return Redirect::route("admin.categories.edit", array("id" => $category->id))
-                            ->with("message", trans("categories::categories.events.created"));
+                ->with("message", trans("categories::categories.events.created"));
         }
 
         $this->data["category"] = false;
         return View::make("categories::edit", $this->data);
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
 
         $category = Category::findOrFail($id);
         if (Request::isMethod("post")) {
@@ -110,7 +114,8 @@ class CategoriesController extends Controller {
         return View::make("categories::edit", $this->data);
     }
 
-    public function delete() {
+    public function delete()
+    {
         $ids = Request::get("id");
         if (!is_array($ids)) {
             $ids = array($ids);

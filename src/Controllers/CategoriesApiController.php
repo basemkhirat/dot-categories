@@ -2,15 +2,14 @@
 
 namespace Dot\Categories\Controllers;
 
-use Dot\ApiController;
+use Dot\Platform\APIController;
 use Dot\Categories\Models\Category;
 use Illuminate\Http\Request;
-
 
 /**
  * Class CategoriesApiController
  */
-class CategoriesApiController extends ApiController
+class CategoriesApiController extends APIController
 {
 
     /**

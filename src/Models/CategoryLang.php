@@ -2,9 +2,10 @@
 
 namespace Dot\Categories\Models;
 
-use Dot\Model;
+use Dot\Platform\Model;
 
-class CategoryLang extends Model {
+class CategoryLang extends Model
+{
 
     protected $module = 'categories';
 

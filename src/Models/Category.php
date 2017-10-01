@@ -3,10 +3,10 @@
 namespace Dot\Categories\Models;
 
 use DB;
-use Lang;
-use Dot\Model;
 use Dot\Media\Models\Media;
+use Dot\Platform\Model;
 use Dot\Users\Models\User;
+use Lang;
 
 /**
  * Class Category

@@ -2,13 +2,11 @@
 
 namespace Dot\Categories;
 
-use Plugin;
-use Navigation;
 use Gate;
+use Navigation;
 use URL;
 
-
-class CategoriesPlugin extends Plugin
+class Plugin extends \Dot\Platform\Plugin
 {
 
     public $permissions = [
