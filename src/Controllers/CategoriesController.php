@@ -8,19 +8,21 @@ use Dot\Categories\Models\Category;
 use Dot\Platform\Controller;
 use Redirect;
 use Request;
-use View;
 
 class CategoriesController extends Controller
 {
 
+    /**
+     * View payload
+     * @var array
+     */
     protected $data = [];
 
-    function __construct()
-    {
-        parent::__construct();
-        $this->middleware("permission:categories.manage");
-    }
-
+    /**
+     * Show all categories
+     * @param int $parent
+     * @return mixed
+     */
     function index($parent = 0)
     {
 
@@ -44,9 +46,14 @@ class CategoriesController extends Controller
         }
 
         $this->data["categories"] = $query->paginate($this->data['per_page']);
-        return View::make("categories::show", $this->data);
+
+        return view("categories::show", $this->data);
     }
 
+    /**
+     * Create a new category
+     * @return mixed
+     */
     public function create()
     {
 
@@ -62,7 +69,8 @@ class CategoriesController extends Controller
             $category->status = 1;
             $category->lang = app()->getLocale();
 
-            // fire category saving action
+            // Fire saving action
+
             Action::fire("category.saving", $category);
 
             if (!$category->validate()) {
@@ -71,7 +79,8 @@ class CategoriesController extends Controller
 
             $category->save();
 
-            // fire category saved action
+            // Fire saved action
+
             Action::fire("category.saved", $category);
 
             return Redirect::route("admin.categories.edit", array("id" => $category->id))
@@ -79,13 +88,20 @@ class CategoriesController extends Controller
         }
 
         $this->data["category"] = false;
-        return View::make("categories::edit", $this->data);
+
+        return view("categories::edit", $this->data);
     }
 
+    /**
+     * Edit category by id
+     * @param $id
+     * @return mixed
+     */
     public function edit($id)
     {
 
         $category = Category::findOrFail($id);
+
         if (Request::isMethod("post")) {
 
             $category->name = Request::get('name');
@@ -95,7 +111,8 @@ class CategoriesController extends Controller
             $category->status = 1;
             $category->lang = app()->getLocale();
 
-            // fire category saving action
+            // Fire saving action
+
             Action::fire("category.saving", $category);
 
             if (!$category->validate()) {
@@ -104,34 +121,43 @@ class CategoriesController extends Controller
 
             $category->save();
 
-            // fire category saved action
+            // Fire saved action
+
             Action::fire("category.saved", $category);
 
             return Redirect::route("admin.categories.edit", array("id" => $id))->with("message", trans("categories::categories.events.updated"));
         }
 
         $this->data["category"] = $category;
-        return View::make("categories::edit", $this->data);
+
+        return view("categories::edit", $this->data);
     }
 
+    /**
+     * Delete category by id
+     * @return mixed
+     */
     public function delete()
     {
         $ids = Request::get("id");
-        if (!is_array($ids)) {
-            $ids = array($ids);
-        }
-        foreach ($ids as $ID) {
-            $category = Category::findOrFail($ID);
 
-            // fire category deleting action
+        $ids = is_array($ids) ? $ids : [$ids];
+
+        foreach ($ids as $id) {
+
+            $category = Category::findOrFail($id);
+
+            // Fire deleting action
+
             Action::fire("category.deleting", $category);
 
             $category->delete();
 
-            // fire category deleted action
-            Action::fire("category.deleted", $category);
+            // Fire deleted action
 
+            Action::fire("category.deleted", $category);
         }
+
         return Redirect::back()->with("message", trans("categories::categories.events.deleted"));
     }
 

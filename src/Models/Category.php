@@ -10,6 +10,7 @@ use Lang;
 
 /**
  * Class Category
+ * @package Dot\Categories\Models
  */
 class Category extends Model
 {
@@ -88,6 +89,7 @@ class Category extends Model
     ];
 
     /**
+     * image relation
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     function image()
@@ -96,6 +98,7 @@ class Category extends Model
     }
 
     /**
+     * user relation
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     function user()
@@ -103,6 +106,10 @@ class Category extends Model
         return $this->hasOne(User::class, "id", "user_id");
     }
 
+    /**
+     * categories relation
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     function categories()
     {
         return $this->hasMany(Category::class, 'parent');
@@ -116,171 +123,4 @@ class Category extends Model
     {
         $query->where("categories.parent", $parent);
     }
-
-    /**
-     * @param int $parent
-     * @return array
-     */
-    public static function map($parent = 0)
-    {
-
-        $row = Category::where("categories.id", $parent)->first();
-
-        static $new_cats = array();
-
-        if (count($row)) {
-            $new_cats[] = $row;
-            self::map($row->parent);
-        }
-
-        return array_reverse($new_cats);
-    }
-
-    /**
-     * @param $db
-     * @return mixed
-     */
-    public static function getCategories($db)
-    {
-        return $categories = DB::table('categories')
-            ->where('categories.site', '=', $db)
-            ->get();
-    }
-
-    /**
-     * @param $conn
-     * @param int $parent_id
-     * @param string $key
-     * @param $db
-     * @return mixed
-     */
-    public static function getChildCategories($conn, $parent_id = 0, $key = "", $db)
-    {
-        $lang = Lang::getLocale();
-        $categories = DB::table('categories')->where("parent", "=", $parent_id)
-            ->leftJoin("media", "media.id", "=", "categories.image_id")
-            ->where('categories.site', '=', $db);
-        if ($key != "") {
-            $categories->where("name", "LIKE", '%' . $key . '%');
-        }
-        return $categories->paginate(20);
-    }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public static function getcategory($id)
-    {
-        return $category = DB::table('categories')
-            ->leftJoin("media", "media.id", "=", "categories.cat_img")
-            ->where("categories.id", "=", $id)
-            ->get();
-    }
-
-    /**
-     * @param $id
-     * @param $code
-     * @return mixed
-     */
-    public static function getCategoryLangs($id, $code)
-    {
-        return $langs = DB::table('categories')
-            ->where("id", "=", $id)
-            ->where("site", "=", $code)
-            ->get();
-    }
-
-    /**
-     * @param $row
-     * @return mixed
-     */
-    public static function saveCategory($row)
-    {
-        return $id = DB::table('categories')->insertGetId($row);
-    }
-
-    /**
-     * @param $row
-     */
-    public static function saveCategorylangs($row)
-    {
-        DB::table('categories')->insert($row);
-    }
-
-    /**
-     * @param $row
-     * @param $id
-     */
-    public static function updateCategory($row, $id)
-    {
-        DB::table('categories')->where('id', $id)->update($row);
-    }
-
-    /**
-     * @param $row
-     * @param $id
-     * @param $lang
-     */
-    public static function updateCategorylangs($row, $id, $lang)
-    {
-        DB::table('categories')
-            ->where('id', $id)
-            ->where('site', $lang)
-            ->update($row);
-    }
-
-    /**
-     * @param $id
-     */
-    public static function deleteCategory($id)
-    {
-        DB::table('categories')->where('id', '=', $id)->delete();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function posts()
-    {
-        return $this->belongsToMany('Post', 'posts_categories', 'category_id', 'post_id')->take(10);
-    }
-
-    public function samples()
-    {
-        return $this->posts()->orderBy("created_at", "DESC")->take(3);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function postViews()
-    {
-        return $this->belongsToMany('Post', 'posts_categories', 'category_id', 'post_id')
-            ->leftJoin('posts_stats', 'posts_stats.post_id', '=', 'posts.id')
-            ->select(DB::raw('sum(posts_stats.views) as total'))->groupBy('posts.id')->where('type', 'post');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function postStats()
-    {
-        return $this->belongsToMany('PostStat', 'posts_categories', 'category_id', 'post_id')
-            ->select(DB::raw('sum(facebook) as facebook'), DB::raw('sum(twitter) as twitter'), DB::raw('sum(youtube) as youtube'))
-            ->leftJoin('posts', 'posts.id', '=', 'posts_stats.post_id')->where('type', 'post')->groupBy('posts.id');
-    }
-
-    /**
-     * The "booting" method of the model.
-     *
-     * @return void
-     */
-    protected static function boot()
-    {
-        parent::boot();
-
-        //static::addGlobalScope(new LangScope);
-    }
-
 }

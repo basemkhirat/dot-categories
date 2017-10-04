@@ -5,7 +5,7 @@
  */
 Route::group(array(
     "prefix" => ADMIN,
-    "middleware" => ["web", "auth"],
+    "middleware" => ["web", "auth", "can:categories.manage"],
         ), function($route) {
     $route->group(array("prefix" => "categories"), function($route) {
         $route->any('/create', array("as" => "admin.categories.create", "uses" => "Dot\Categories\Controllers\CategoriesController@create"));
