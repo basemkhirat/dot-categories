@@ -106,18 +106,14 @@
                         <div class="panel-body form-group">
                             <div class="row post-image-block">
                                 <input type="hidden" name="image_id" class="post-image-id" value="
-                                @if($category and @$category->image->path != "")
-                                    {{ @$category->image->id }}
-                                @else
-                                    0
-                                @endif">
+                                {{ ($category and @$category->image->path != "") ? @$category->image->id : 0 }}">
                                 <a class="change-post-image label" href="javascript:void(0)">
                                     <i class="fa fa-pencil text-navy"></i>
                                     {{ trans("categories::categories.change_image") }}
                                 </a>
                                 <a class="post-image-preview" href="javascript:void(0)">
                                     <img width="100%" height="130px" class="post-image"
-                                         src="@if ($category and @$category->image->id != "") {{ thumbnail(@$category->image->path) }} @else {{ assets("admin::default/image.png") }} @endif">
+                                         src="{{ ($category and @$category->image->id != "") ? thumbnail(@$category->image->path) : assets("admin::default/image.png") }}">
                                 </a>
                             </div>
                         </div>
