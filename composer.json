@@ -11,9 +11,9 @@
 
     "require": {
         "dot/platform": "0.4.*",
-        "dot/auth": "*",
-        "dot/media": "*",
-        "dot/users": "*"
+        "dot/auth": "dev-master",
+        "dot/media": "dev-master",
+        "dot/users": "dev-master"
     },
 
     "autoload": {
