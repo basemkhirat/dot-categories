@@ -181,10 +181,10 @@
 @push("footer")
 
     <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
 
-            //$('.chosen-select').chosen();
+        $(document).ready(function () {
+
+            $('[data-toggle="tooltip"]').tooltip();
 
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
@@ -210,6 +210,7 @@
                 $(".filter-form").submit();
             });
         });
+
     </script>
 
 @endpush
