@@ -3,30 +3,34 @@
 /*
  * WEB
  */
-Route::group(array(
+
+Route::group([
     "prefix" => ADMIN,
-    "middleware" => ["web", "auth", "can:categories.manage"],
-        ), function($route) {
-    $route->group(array("prefix" => "categories"), function($route) {
-        $route->any('/create', array("as" => "admin.categories.create", "uses" => "Dot\Categories\Controllers\CategoriesController@create"));
-        $route->any('/delete', array("as" => "admin.categories.delete", "uses" => "Dot\Categories\Controllers\CategoriesController@delete"));
-        $route->any('/{id?}', array("as" => "admin.categories.show", "uses" => "Dot\Categories\Controllers\CategoriesController@index"));
-        $route->any('/{id}/edit', array("as" => "admin.categories.edit", "uses" => "Dot\Categories\Controllers\CategoriesController@edit"));
+    "middleware" => ["web", "auth:backend", "can:categories.manage"],
+    "namespace" => "Dot\\Categories\\Controllers"
+], function ($route) {
+    $route->group(["prefix" => "categories"], function ($route) {
+        $route->any('/create', ["as" => "admin.categories.create", "uses" => "CategoriesController@create"]);
+        $route->any('/delete', ["as" => "admin.categories.delete", "uses" => "CategoriesController@delete"]);
+        $route->any('/{id?}', ["as" => "admin.categories.show", "uses" => "CategoriesController@index"]);
+        $route->any('/{id}/edit', ["as" => "admin.categories.edit", "uses" => "CategoriesController@edit"]);
     });
 });
 
 /*
  * API
  */
+
 Route::group([
     "prefix" => API,
-    "middleware" => ["auth:api"]
+    "middleware" => ["auth:api"],
+    "namespace" => "Dot\\Categories\\Controllers"
 ], function ($route) {
-    $route->get("/categories/show", "Dot\Categories\Controllers\CategoriesApiController@show");
-    $route->get("/categories/samples", "Dot\Categories\Controllers\CategoriesApiController@samples");
-    $route->post("/categories/create", "Dot\Categories\Controllers\CategoriesApiController@create");
-    $route->post("/categories/update", "Dot\Categories\Controllers\CategoriesApiController@update");
-    $route->post("/categories/destroy", "Dot\Categories\Controllers\CategoriesApiController@destroy");
+    $route->get("/categories/show", "CategoriesApiController@show");
+    $route->get("/categories/samples", "CategoriesApiController@samples");
+    $route->post("/categories/create", "CategoriesApiController@create");
+    $route->post("/categories/update", "CategoriesApiController@update");
+    $route->post("/categories/destroy", "CategoriesApiController@destroy");
 });
 
 
