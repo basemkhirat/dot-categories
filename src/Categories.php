@@ -21,7 +21,7 @@ class Categories extends \Dot\Platform\Plugin
         Navigation::menu("sidebar", function ($menu) {
 
             if (Auth::user()->can("categories.manage")) {
-                $menu->item('categories', trans("categories::categories.categories"), URL::to(ADMIN . '/categories'))->icon("fa-folder")->order(1);
+                $menu->item('categories', trans("categories::categories.categories"), route("admin.categories.show"))->icon("fa-folder")->order(1);
             }
         });
     }
