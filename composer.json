@@ -20,11 +20,5 @@
         "psr-4": {
             "Dot\\Categories\\": "src"
         }
-    },
-
-    "config": {
-        "preferred-install": "dist"
-    },
-
-    "minimum-stability" : "dev"
+    }
 }
