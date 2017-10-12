@@ -9,6 +9,10 @@ use URL;
 class Categories extends \Dot\Platform\Plugin
 {
 
+    protected $dependencies = [
+        "seo" => \Dot\Seo\Seo::class
+    ];
+
     protected $permissions = [
         "manage"
     ];
