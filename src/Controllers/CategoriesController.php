@@ -27,7 +27,7 @@ class CategoriesController extends Controller
     {
 
         if (Request::isMethod("post")) {
-            if (Request::has("action")) {
+            if (Request::filled("action")) {
                 switch (Request::get("action")) {
                     case "delete":
                         return $this->delete();
@@ -35,13 +35,13 @@ class CategoriesController extends Controller
             }
         }
 
-        $this->data["sort"] = (Request::has("sort")) ? Request::get("sort") : "name";
-        $this->data["order"] = (Request::has("order")) ? Request::get("order") : "ASC";
-        $this->data['per_page'] = (Request::has("per_page")) ? Request::get("per_page") : NULL;
+        $this->data["sort"] = (Request::filled("sort")) ? Request::get("sort") : "name";
+        $this->data["order"] = (Request::filled("order")) ? Request::get("order") : "ASC";
+        $this->data['per_page'] = (Request::filled("per_page")) ? Request::get("per_page") : NULL;
 
         $query = Category::parent($parent)->orderBy($this->data["sort"], $this->data["order"]);
 
-        if (Request::has("q")) {
+        if (Request::filled("q")) {
             $query->search(urldecode(Request::get("q")));
         }
 
