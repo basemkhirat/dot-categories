@@ -129,7 +129,7 @@
 
 @stop
 
-@push("footer")
+@section("footer")
 
     <script>
         $(document).ready(function () {
@@ -145,10 +145,10 @@
                     }
                 },
                 error: function (media_path) {
-                    alert_box("{{ trans("categories::categories.not_allowed_file") ?>");
+                    alert_box("{{ trans("categories::categories.not_allowed_file") }}");
                 }
             });
 
         });
     </script>
-@endpush
+@stop
