@@ -21,7 +21,7 @@
         <div class="col-lg-8 col-md-6 col-sm-6 col-xs-12 text-right">
             <a href="{{ route("admin.categories.create") }}" class="btn btn-primary btn-labeled btn-main">
                 <span class="btn-label icon fa fa-plus"></span>
-                 {{ trans("categories::categories.add_new") }}</a>
+                {{ trans("categories::categories.add_new") }}</a>
         </div>
     </div>
 
@@ -82,92 +82,93 @@
                     </div>
                     <div class="ibox-content">
                         @if(count($categories))
-                        <div class="row">
-                            <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 action-box">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 action-box">
 
-                                <select name="action" class="form-control pull-left">
-                                    <option value="-1"
-                                            selected="selected">{{ trans("categories::categories.bulk_actions") }}</option>
-                                    <option
-                                        value="delete">{{ trans("categories::categories.delete") }}</option>
+                                    <select name="action" class="form-control pull-left">
+                                        <option value="-1"
+                                                selected="selected">{{ trans("categories::categories.bulk_actions") }}</option>
+                                        <option
+                                            value="delete">{{ trans("categories::categories.delete") }}</option>
 
-                                </select>
-                                <button type="submit"
-                                        class="btn btn-primary pull-right">{{ trans("categories::categories.apply") }}</button>
+                                    </select>
+                                    <button type="submit"
+                                            class="btn btn-primary pull-right">{{ trans("categories::categories.apply") }}</button>
 
+                                </div>
+
+                                <div class="col-lg-6 col-md-4 hidden-sm hidden-xs"></div>
+
+                                <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                                    <select class="form-control per_page_filter">
+                                        <option value="" selected="selected">
+                                            -- {{ trans("categories::categories.per_page") }} --
+                                        </option>
+                                        @foreach (array(10, 20, 30, 40) as $num)
+                                            <option value="{{ $num }}"
+                                                    @if ($num == $per_page) selected="selected" @endif>{{ $num }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
+                            <div class="table-responsive">
+                                <table cellpadding="0" cellspacing="0" border="0"
+                                       class="table table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:35px"><input type="checkbox" class="i-checks check_all"
+                                                                      name="ids[]"/></th>
+                                        <th>{{ trans("categories::categories.attributes.name") }}</th>
+                                        <th>{{ trans("categories::categories.actions") }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach ($categories as $category)
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="i-checks" name="id[]"
+                                                       value="{{ $category->id }}"/>
+                                            </td>
 
-                            <div class="col-lg-6 col-md-4 hidden-sm hidden-xs"></div>
+                                            <td>
+                                                <a data-toggle="tooltip" data-placement="bottom"
+                                                   title="{{ trans("categories::categories.show_children") }}"
+                                                   class="text-navy"
+                                                   href="{{ route("admin.categories.show", array("id" => $category->id)) }}">
+                                                    <strong>{{ $category->name }}</strong>
+                                                </a>
 
-                            <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-                                <select class="form-control per_page_filter">
-                                    <option value="" selected="selected">
-                                        -- {{ trans("categories::categories.per_page") }} --
-                                    </option>
-                                    @foreach (array(10, 20, 30, 40) as $num)
-                                    <option value="{{ $num }}"
-                                            @if ($num == $per_page) selected="selected" @endif>{{ $num }}</option>
+                                            </td>
+
+                                            <td class="center">
+                                                <a data-toggle="tooltip" data-placement="bottom"
+                                                   title="{{ trans("categories::categories.edit") }}"
+                                                   href="{{ route("admin.categories.edit", array("id" => $category->id)) }}">
+                                                    <i class="fa fa-pencil text-navy"></i>
+                                                </a>
+                                                <a data-toggle="tooltip" data-placement="bottom"
+                                                   title="{{ trans("categories::categories.delete") }}"
+                                                   class="delete_user ask"
+                                                   message="{{ trans("categories::categories.sure_delete") }}"
+                                                   href="{{ URL::route("admin.categories.delete", array("id" => $category->id)) }}">
+                                                    <i class="fa fa-times text-navy"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                     @endforeach
-                                </select>
+                                    </tbody>
+                                </table>
                             </div>
-                        </div>
-                        <div class="table-responsive">
-                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-hover">
-                                <thead>
-                                <tr>
-                                    <th style="width:35px"><input type="checkbox" class="i-checks check_all"
-                                                                  name="ids[]"/></th>
-                                    <th>{{ trans("categories::categories.attributes.name") }}</th>
-                                    <th>{{ trans("categories::categories.actions") }}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($categories as $category)
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" class="i-checks" name="id[]"
-                                               value="{{ $category->id }}"/>
-                                    </td>
-
-                                    <td>
-                                        <a data-toggle="tooltip" data-placement="bottom"
-                                           title="{{ trans("categories::categories.show_children") }}"
-                                           class="text-navy"
-                                           href="{{ route("admin.categories.show", array("id" => $category->id)) }}">
-                                            <strong>{{ $category->name }}</strong>
-                                        </a>
-
-                                    </td>
-
-                                    <td class="center">
-                                        <a data-toggle="tooltip" data-placement="bottom"
-                                           title="{{ trans("categories::categories.edit") }}"
-                                           href="{{ route("admin.categories.edit", array("id" => $category->id)) }}">
-                                            <i class="fa fa-pencil text-navy"></i>
-                                        </a>
-                                        <a data-toggle="tooltip" data-placement="bottom"
-                                           title="{{ trans("categories::categories.delete") }}"
-                                           class="delete_user ask"
-                                           message="{{ trans("categories::categories.sure_delete") }}"
-                                           href="{{ URL::route("admin.categories.delete", array("id" => $category->id)) }}">
-                                            <i class="fa fa-times text-navy"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12 text-center">
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
                                     {{ trans("categories::categories.page") }} {{ $categories->currentPage() }} {{ trans("categories::categories.of") }} {{ $categories->lastPage() }}
-                            </div>
-                            <div class="col-lg-12 text-center">
+                                </div>
+                                <div class="col-lg-12 text-center">
                                     {{ $categories->appends(Request::all())->render() }}
+                                </div>
                             </div>
-                        </div>
                         @else
-                        {{ trans("categories::categories.no_records") }}
+                            {{ trans("categories::categories.no_records") }}
                         @endif
                     </div>
                 </div>

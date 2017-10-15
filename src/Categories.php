@@ -2,8 +2,6 @@
 
 namespace Dot\Categories;
 
-use Dot\Pages\Pages;
-use Dot\Users\Users;
 use Illuminate\Support\Facades\Auth;
 use Navigation;
 use URL;

@@ -3,9 +3,9 @@
 namespace Dot\Categories\Controllers;
 
 use Action;
-use Illuminate\Support\Facades\Auth;
 use Dot\Categories\Models\Category;
 use Dot\Platform\Controller;
+use Illuminate\Support\Facades\Auth;
 use Redirect;
 use Request;
 
@@ -48,6 +48,34 @@ class CategoriesController extends Controller
         $this->data["categories"] = $query->paginate($this->data['per_page']);
 
         return view("categories::show", $this->data);
+    }
+
+    /**
+     * Delete category by id
+     * @return mixed
+     */
+    public function delete()
+    {
+        $ids = Request::get("id");
+
+        $ids = is_array($ids) ? $ids : [$ids];
+
+        foreach ($ids as $id) {
+
+            $category = Category::findOrFail($id);
+
+            // Fire deleting action
+
+            Action::fire("category.deleting", $category);
+
+            $category->delete();
+
+            // Fire deleted action
+
+            Action::fire("category.deleted", $category);
+        }
+
+        return Redirect::back()->with("message", trans("categories::categories.events.deleted"));
     }
 
     /**
@@ -131,34 +159,6 @@ class CategoriesController extends Controller
         $this->data["category"] = $category;
 
         return view("categories::edit", $this->data);
-    }
-
-    /**
-     * Delete category by id
-     * @return mixed
-     */
-    public function delete()
-    {
-        $ids = Request::get("id");
-
-        $ids = is_array($ids) ? $ids : [$ids];
-
-        foreach ($ids as $id) {
-
-            $category = Category::findOrFail($id);
-
-            // Fire deleting action
-
-            Action::fire("category.deleting", $category);
-
-            $category->delete();
-
-            // Fire deleted action
-
-            Action::fire("category.deleted", $category);
-        }
-
-        return Redirect::back()->with("message", trans("categories::categories.events.deleted"));
     }
 
 }

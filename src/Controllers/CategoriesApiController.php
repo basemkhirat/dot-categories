@@ -2,8 +2,8 @@
 
 namespace Dot\Categories\Controllers;
 
-use Dot\Platform\APIController;
 use Dot\Categories\Models\Category;
+use Dot\Platform\APIController;
 use Illuminate\Http\Request;
 
 /**
@@ -44,8 +44,8 @@ class CategoriesApiController extends APIController
 
         $components = $request->get("with", []);
 
-        foreach($components as $relation => $data){
-            $components[$relation] = function($query) use ($data){
+        foreach ($components as $relation => $data) {
+            $components[$relation] = function ($query) use ($data) {
                 return $query->orderBy(array_get($data, 'order_by', "id"), array_get($data, 'order_direction', "DESC"));
             };
         }
@@ -92,8 +92,8 @@ class CategoriesApiController extends APIController
 
         $components = $request->get("with", []);
 
-        foreach($components as $relation => $data){
-            $components[$relation] = function($query) use ($data){
+        foreach ($components as $relation => $data) {
+            $components[$relation] = function ($query) use ($data) {
                 return $query->orderBy(array_get($data, 'order_by', "id"), array_get($data, 'order_direction', "DESC"));
             };
         }
@@ -134,9 +134,9 @@ class CategoriesApiController extends APIController
         $category = new Category();
 
         $category->name = $request->name;
-     //   $category->slug = $request->slug;
-      //  $category->lang = $this->user->lang;
-      //  $category->user_id = $this->user->id;
+        //   $category->slug = $request->slug;
+        //  $category->lang = $this->user->lang;
+        //  $category->user_id = $this->user->id;
 
         // Validate and save requested user
         if (!$category->validate()) {
