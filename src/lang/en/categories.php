@@ -39,7 +39,6 @@ return [
         'slug' => 'Slug',
         'parent' => 'parent',
 
-
     ],
 
     "events" => [
