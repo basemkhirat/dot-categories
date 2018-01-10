@@ -12,13 +12,13 @@ use Request;
 class CategoriesController extends Controller
 {
 
-    /**
+    /*
      * View payload
      * @var array
      */
     protected $data = [];
 
-    /**
+    /*
      * Show all categories
      * @param int $parent
      * @return mixed
@@ -50,7 +50,7 @@ class CategoriesController extends Controller
         return view("categories::show", $this->data);
     }
 
-    /**
+    /*
      * Delete category by id
      * @return mixed
      */
@@ -78,7 +78,7 @@ class CategoriesController extends Controller
         return Redirect::back()->with("message", trans("categories::categories.events.deleted"));
     }
 
-    /**
+    /*
      * Create a new category
      * @return mixed
      */
@@ -120,7 +120,7 @@ class CategoriesController extends Controller
         return view("categories::edit", $this->data);
     }
 
-    /**
+    /*
      * Edit category by id
      * @param $id
      * @return mixed
