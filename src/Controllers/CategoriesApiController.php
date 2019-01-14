@@ -6,13 +6,13 @@ use Dot\Categories\Models\Category;
 use Dot\Platform\APIController;
 use Illuminate\Http\Request;
 
-/*
+/**
  * Class CategoriesApiController
  */
 class CategoriesApiController extends APIController
 {
 
-    /*
+    /**
      * CategoriesApiController constructor.
      */
     function __construct(Request $request)
@@ -21,7 +21,7 @@ class CategoriesApiController extends APIController
         $this->middleware("permission:categories.manage");
     }
 
-    /*
+    /**
      * List categories
      * @param int $id (optional) The object identifier.
      * @param string $q (optional) The search query string.
@@ -68,7 +68,7 @@ class CategoriesApiController extends APIController
 
     }
 
-    /*
+    /**
      * List categories with sample posts
      * @param int $id (optional) The object identifier.
      * @param string $q (optional) The search query string.
@@ -122,7 +122,7 @@ class CategoriesApiController extends APIController
     }
 
 
-    /*
+    /**
      * Create a new category
      * @param string $name (required) The category name.
      * @param string $slug (optional) The category slug.
@@ -152,7 +152,7 @@ class CategoriesApiController extends APIController
 
     }
 
-    /*
+    /**
      * Update category by id
      * @param int $id (required) The category id.
      * @param string $name (required) The category name.
@@ -181,7 +181,7 @@ class CategoriesApiController extends APIController
 
     }
 
-    /*
+    /**
      * Delete category by id
      * @param int $id (required) The category id.
      * @return \Illuminate\Http\JsonResponse
