@@ -3,7 +3,7 @@
 namespace Dot\Categories;
 
 use Illuminate\Support\Facades\Auth;
-use Navigation;
+use Dot\Platform\Facades\Navigation;
 
 class Categories extends \Dot\Platform\Plugin
 {

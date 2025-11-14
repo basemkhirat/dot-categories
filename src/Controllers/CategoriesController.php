@@ -2,12 +2,12 @@
 
 namespace Dot\Categories\Controllers;
 
-use Action;
+use Dot\Platform\Facades\Action;
 use Dot\Categories\Models\Category;
 use Dot\Platform\Controller;
 use Illuminate\Support\Facades\Auth;
-use Redirect;
-use Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Request;
 
 class CategoriesController extends Controller
 {
