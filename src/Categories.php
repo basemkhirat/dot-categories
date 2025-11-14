@@ -4,7 +4,6 @@ namespace Dot\Categories;
 
 use Illuminate\Support\Facades\Auth;
 use Navigation;
-use URL;
 
 class Categories extends \Dot\Platform\Plugin
 {
