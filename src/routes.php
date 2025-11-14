@@ -16,21 +16,3 @@ Route::group([
         $route->any('/{id}/edit', ["as" => "admin.categories.edit", "uses" => "CategoriesController@edit"]);
     });
 });
-
-/*
- * API
- */
-
-Route::group([
-    "prefix" => API,
-    "middleware" => ["auth:api"],
-    "namespace" => "Dot\\Categories\\Controllers"
-], function ($route) {
-    $route->get("/categories/show", "CategoriesApiController@show");
-    $route->get("/categories/samples", "CategoriesApiController@samples");
-    $route->post("/categories/create", "CategoriesApiController@create");
-    $route->post("/categories/update", "CategoriesApiController@update");
-    $route->post("/categories/destroy", "CategoriesApiController@destroy");
-});
-
-
